@@ -10,7 +10,7 @@
   ],
   "minimum-stability":"dev",
   "require":{
-    
+    "mustache\/mustache":"2.4.*"
   },
   "autoload":{
     "psr-0":{
@@ -24,5 +24,9 @@
     "branch-alias":{
       "dev-master":"1.0.x-dev"
     }
+  },
+  "require-dev": {
+    "webforge/testplate": "1.3.*@dev",
+    "webforge/dom": "1.*"
   }
 }
