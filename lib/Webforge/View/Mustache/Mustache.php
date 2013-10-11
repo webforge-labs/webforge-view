@@ -27,10 +27,8 @@ class Mustache implements TemplateEngine, TemplatesDirectoryEngine {
   protected $loader;
 
   public function __construct(Dir $templates, Dir $cache) {
-    //$tplBase = $packageRoot->sub('resources/tpl/');
-    //$tplCache = $packageRoot->sub('files/cache/mustache/')->create();
     $this->tplBase = $templates;
-    $this->tplCache = $cache;
+    $this->tplCache = $cache; // btw: mustache creates it cache directory itself
   }
 
   /**
@@ -42,7 +40,7 @@ class Mustache implements TemplateEngine, TemplatesDirectoryEngine {
 
   public function addTemplatesDirectory(Dir $dir) {
     $this->getLoader()->addLoader(
-      new Mustache_Loader_FilesystemLoader((string) $dir)
+      new Mustache_Loader_FilesystemLoader($dir->getPath(Dir::WITHOUT_TRAILINGSLASH))
     );
   }
 
