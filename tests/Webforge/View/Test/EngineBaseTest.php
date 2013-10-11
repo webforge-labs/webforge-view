@@ -9,6 +9,10 @@ class EngineBaseTest extends \Webforge\Code\Test\Base implements \Webforge\Code\
   protected $viewModels = array();
 
   public function setup() {
+    $this->spec = (object) array(
+      'usesDirectories'=>FALSE
+    );
+
     $this->viewModels = array(json_decode('{
       "team": {
         "name": "team",
@@ -25,15 +29,19 @@ class EngineBaseTest extends \Webforge\Code\Test\Base implements \Webforge\Code\
     parent::setup();
 
     $this->templatesDir = $this->getPackageDir('tests/files/templates/');
+    $this->otherTemplatesDir = $this->getPackageDir('tests/files/other-templates/');
     $this->cacheDir = $this->getPackageDir('build/cache/');
   }
 
 
   // simple tests
-  public function testImplementsEngineInterface() {
+  public function testImplementsEngineInterfaces() {
     $this->assertInstanceOf('Webforge\View\TemplateEngine', $this->engine);
-  }
 
+    if ($this->spec->usesDirectories) {
+      $this->assertInstanceOf('Webforge\View\TemplatesDirectoryEngine', $this->engine);
+    }
+  }
 
   // UTILS
   protected function getViewModel($index) {
