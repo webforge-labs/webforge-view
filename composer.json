@@ -1,5 +1,5 @@
 {
-  "name":"webforge\/view",
+  "name":"webforge/view",
   "description":"Abstraction for the views of an MVC system",
   "license":"MIT",
   "authors":[
@@ -14,10 +14,7 @@
   },
   "autoload":{
     "psr-0":{
-      "Webforge\\View":[
-        "lib\/",
-        "tests\/"
-      ]
+      "Webforge\\View":["lib/", "tests/"]
     }
   },
   "extra":{
