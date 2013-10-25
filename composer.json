@@ -24,6 +24,7 @@
   },
   "require-dev": {
     "webforge/testplate": "1.3.*@dev",
-    "webforge/dom": "1.*"
+    "webforge/dom": "1.*",
+    "satooshi/php-coveralls": "dev-master"
   }
 }
