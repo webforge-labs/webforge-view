@@ -44,6 +44,10 @@ class Mustache implements TemplateEngine, TemplatesDirectoryEngine {
     );
   }
 
+  public function addFunctionalHelper($name, $helper) {
+    $this->getMustacheEngine()->addHelper($name, $helper);
+  }
+
   protected function getMustacheEngine() {
     if (!isset($this->mustacheEngine)) {
 
