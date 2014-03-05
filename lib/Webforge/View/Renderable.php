@@ -12,5 +12,5 @@ interface Renderable {
   /**
    * @return array|object the variables to render within the template
    */
-  public function getTemplateVars();
+  public function getTemplateVariables();
 }

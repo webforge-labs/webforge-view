@@ -9,9 +9,10 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Webforge\Common\ClassUtil;
 
+// $template can be of instance Webforge\View\Renderable or the name in the format: bundle:controller:name.format (e.g.: :CMS/Widgets:video.html)
 class SymfonyAdapter implements EngineInterface {
 
-  protected $engine;
+  protected $engine, $engineName;
   protected $nameParser;
   protected $loader;
   protected $urlGenerator;
@@ -25,18 +26,24 @@ class SymfonyAdapter implements EngineInterface {
     $this->setFunctionalHelpers();
   }
 
-  public function renderResponse($name, Array $parameters = array(), Response $response = NULL) {
+  public function renderResponse($template, Array $parameters = array(), Response $response = NULL) {
     if ($response === NULL) {
       $response = new Response();
     }
 
-    $response->setContent($this->render($name, $parameters));
+    $response->setContent($this->render($template, $parameters));
 
     return $response;
   }
 
-  public function render($name, Array $parameters = array()) {
-    $templateReference = $this->nameParser->parse($name);
+  public function render($template, Array $parameters = array()) {
+    if ($template instanceof Renderable) {
+      $renderable = $template;
+      $parameters = $renderable->getTemplateVariables();
+      $template = $renderable->getTemplateIdentifier();
+    }
+
+    $templateReference = $this->nameParser->parse($template);
 
     if ($template = $this->loader->load($templateReference)) {
       // render as a symfony-loaded-template with the raw content
@@ -54,14 +61,14 @@ class SymfonyAdapter implements EngineInterface {
     }
   }
 
-  public function exists($name) {
-    $templateReference = $this->nameParser->parse($name);
+  public function exists($template) {
+    $templateReference = $this->nameParser->parse($template);
 
     return $this->loader->load($templateReference) !== FALSE;
   }
 
-  public function supports($name) {
-    $template = $this->parser->parse($name);
+  public function supports($template) {
+    $template = $this->parser->parse($template);
 
     return $template->get('engine') === $this->engineName;
   }
