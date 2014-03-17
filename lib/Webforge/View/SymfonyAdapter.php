@@ -45,6 +45,10 @@ class SymfonyAdapter implements EngineInterface {
 
     $templateReference = $this->nameParser->parse($template);
 
+    if (is_array($parameters)) {
+      $parameters['debug'] = print_r($parameters, true);
+    }
+
     if ($template = $this->loader->load($templateReference)) {
       // render as a symfony-loaded-template with the raw content
       return $this->engine->render($template->getContent(), $parameters);
