@@ -68,7 +68,11 @@ class SymfonyAdapter implements EngineInterface {
   }
 
   public function supports($template) {
-    $template = $this->parser->parse($template);
+    if ($template instanceof Renderable) {
+      return TRUE;
+    }
+    
+    $template = $this->nameParser->parse($template);
 
     return $template->get('engine') === $this->engineName;
   }
