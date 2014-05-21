@@ -24,6 +24,7 @@ class SymfonyAdapter implements EngineInterface {
     $this->loader = $loader;
     $this->urlGenerator = $urlGenerator;
     $this->setFunctionalHelpers();
+    $this->engine->allowTemplateAsString();
   }
 
   public function renderResponse($template, Array $parameters = array(), Response $response = NULL) {

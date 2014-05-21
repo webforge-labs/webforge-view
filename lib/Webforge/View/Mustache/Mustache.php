@@ -7,6 +7,7 @@ use Webforge\View\TemplatesDirectoryEngine;
 use Mustache_Engine;
 use Mustache_Loader_FilesystemLoader;
 use Mustache_Loader_CascadingLoader;
+use Mustache_Loader_StringLoader;
 use Webforge\Common\System\Dir;
 
 class Mustache implements TemplateEngine, TemplatesDirectoryEngine {
@@ -41,6 +42,12 @@ class Mustache implements TemplateEngine, TemplatesDirectoryEngine {
   public function addTemplatesDirectory(Dir $dir) {
     $this->getLoader()->addLoader(
       new Mustache_Loader_FilesystemLoader($dir->getPath(Dir::WITHOUT_TRAILINGSLASH))
+    );
+  }
+
+  public function allowTemplateAsString() {
+    $this->getLoader()->addLoader(
+      new Mustache_Loader_StringLoader
     );
   }
 
